@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAMILIA DE IMPOSTORES</title>
+    <style>
+        :root { --bg: #0f172a; --card: #1e293b; --primary: #3b82f6; --accent: #10b981; --danger: #ef4444; --text: #f8fafc; --warning: #f59e0b; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 15px; }
+        .card { background: var(--card); padding: 25px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid #334155; width: 100%; max-width: 400px; text-align: center; }
+        h1 { font-size: 24px; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
+        label { display: block; text-align: left; margin: 15px 0 5px 5px; font-weight: bold; font-size: 11px; text-transform: uppercase; color: var(--primary); }
+        input, select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 16px; margin-bottom: 10px; box-sizing: border-box; }
+        button { width: 100%; padding: 16px; border-radius: 14px; border: none; font-size: 18px; font-weight: bold; cursor: pointer; background: var(--primary); color: white; }
+        .name-list { max-height: 200px; overflow-y: auto; margin-bottom: 10px; }
+        .hidden { display: none !important; }
+        .secret-area { background: #0f172a; padding: 20px; border-radius: 15px; margin: 20px 0; border: 2px solid #334155; }
+        .secret-word { font-size: 24px; font-weight: 800; color: var(--accent); text-transform: uppercase; }
+        .hint-box { margin-top: 15px; padding: 10px; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid var(--warning); color: var(--warning); font-size: 14px; }
+        .impostor { color: var(--danger) !important; }
+        .starter-badge { background: rgba(59, 130, 246, 0.1); border: 2px dashed var(--primary); padding: 20px; border-radius: 15px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div id="setup">
+            <h1>🕵️‍♂️ FAMILIA DE IMPOSTORES</h1>
+            <label>Nº Jugadores</label>
+            <input type="number" id="playerQty" value="3" min="3" onchange="buildInputs()">
+            <div id="namesContainer" class="name-list"></div>
+            <label>Categoría</label>
+            <select id="catSelect">
+                <option value="biblia">📖 Biblia</option>
+                <option value="peliculas">🎬 Películas</option>
+                <option value="animales">🦁 Animales</option>
+                <option value="comida">🍕 Comida</option>
+                <option value="lugares">🌍 Lugares</option>
+                <option value="profesiones">👨‍🔧 Profesiones</option>
+            </select>
+            <button onclick="init()">¡Empezar!</button>
+        </div>
+        <div id="game" class="hidden">
+            <h2 id="turnTitle" style="color: var(--primary)">---</h2>
+            <div id="wordBox" class="secret-area hidden">
+                <p style="margin:0; font-size: 12px;">TU ROL/PALABRA:</p>
+                <div id="secretWord" class="secret-word">---</div>
+                <div id="hintArea" class="hint-box hidden">
+                    <strong>Pista sutil:</strong> <span id="hintText"></span>
+                </div>
+            </div>
+            <p id="instr">Pasa el teléfono al jugador indicado.</p>
+            <button id="mainBtn" onclick="flow()">Ver Palabra</button>
+        </div>
+        <div id="finish" class="hidden">
+            <h1>¡A Jugar!</h1>
+            <div class="starter-badge">
+                <p style="margin:0; font-size: 13px;">COMIENZA EL JUEGO:</p>
+                <div id="starterName" style="font-size:30px; color:var(--primary)">---</div>
+            </div>
+            <button onclick="resetGame()" style="background: var(--accent);">Nueva Partida</button>
+        </div>
+    </div>
+
+    <script>
+        // Aquí va toda la base de datos gigante que ya creamos
+        const database = {
+            biblia: [
+                {w: "Arca de Noé", h: "Un refugio o transporte milagroso"},
+                {w: "Moisés", h: "Un gran líder y libertador"},
+                {w: "David y Goliat", h: "Una batalla muy desigual"},
+                {w: "Jonás", h: "Un encuentro con un gran pez"},
+                {w: "Torre de Babel", h: "Un proyecto de construcción fallido"},
+                {w: "Sansón", h: "Alguien con una fuerza física increíble"},
+                {w: "Mar Rojo", h: "Un lugar con un evento acuático asombroso"},
+                {w: "Maná", h: "Alimento que cayó del cielo"},
+                {w: "Zarza Ardiendo", h: "Fuego que no consume lo que toca"},
+                {w: "Lázaro", h: "Alguien que volvió a la vida"},
+                {w: "Tablas de la Ley", h: "Piedras con mandamientos escritos"},
+                {w: "Getsemaní", h: "Un jardín de oración y angustia"},
+                {w: "Estrella de Belén", h: "Una luz guía en el firmamento"},
+                {w: "La Última Cena", h: "Una reunión especial con pan y vino"},
+                {w: "Muro de Jericó", h: "Una fortificación que se derrumbó"},
+                {w: "Salomón", h: "Rey con gran sabiduría"},
+                {w: "Jardín del Edén", h: "El primer hogar de la humanidad"},
+                {w: "Daniel", h: "En un foso con leones"},
+                {w: "Pentecostés", h: "Viento recio y lenguas de fuego"},
+                {w: "Abraham", h: "El padre de la fe"}
+            ],
+            peliculas: [{w:"Titanic",h:"Barco"},{w:"Avengers",h:"Poderes"}],
+            animales: [{w:"León",h:"Selva"},{w:"Delfín",h:"Mar"}],
+            comida: [{w:"Pizza",h:"Italia"},{w:"Sushi",h:"Japón"}],
+            lugares: [{w:"Playa",h:"Sol"},{w:"Cine",h:"Películas"}],
+            profesiones: [{w:"Médico",h:"Salud"},{w:"Bombero",h:"Fuego"}]
+        };
+
+        let players = [], current = 0, impIdx = 0, selectedData = {}, revealed = false;
+
+        function buildInputs() {
+            const c = document.getElementById('namesContainer');
+            const qty = document.getElementById('playerQty').value;
+            c.innerHTML = '';
+            for(let i=1; i<=qty; i++) {
+                const inp = document.createElement('input');
+                inp.placeholder = `Jugador ${i}`;
+                inp.className = 'p-in';
+                c.appendChild(inp);
+            }
+        }
+
+        function init() {
+            const inps = document.querySelectorAll('.p-in');
+            players = Array.from(inps).map((n, i) => n.value.trim() || `Jugador ${i+1}`);
+            if (players.length < 3) { alert("Necesitas al menos 3 jugadores"); return; }
+            const cat = document.getElementById('catSelect').value;
+            selectedData = database[cat][Math.floor(Math.random() * database[cat].length)];
+            impIdx = Math.floor(Math.random() * players.length);
+            current = 0;
+            document.getElementById('setup').classList.add('hidden');
+            document.getElementById('game').classList.remove('hidden');
+            show();
+        }
+
+        function show() {
+            document.getElementById('turnTitle').innerText = players[current];
+            document.getElementById('wordBox').classList.add('hidden');
+            document.getElementById('hintArea').classList.add('hidden');
+            document.getElementById('mainBtn').innerText = "Ver Palabra";
+            revealed = false;
+        }
+
+        function flow() {
+            const wordEl = document.getElementById('secretWord');
+            const hintArea = document.getElementById('hintArea');
+            if(!revealed) {
+                if(current === impIdx) {
+                    wordEl.innerText = "ERES EL IMPOSTOR";
+                    wordEl.classList.add('impostor');
+                    document.getElementById('hintText').innerText = selectedData.h;
+                    hintArea.classList.remove('hidden');
+                } else {
+                    wordEl.innerText = selectedData.w;
+                    wordEl.classList.remove('impostor');
+                    hintArea.classList.add('hidden');
+                }
+                document.getElementById('wordBox').classList.remove('hidden');
+                document.getElementById('mainBtn').innerText = "Entendido (Siguiente)";
+                revealed = true;
+            } else {
+                if(current < players.length - 1) { current++; show(); }
+                else { 
+                    document.getElementById('game').classList.add('hidden');
+                    document.getElementById('finish').classList.remove('hidden');
+                    document.getElementById('starterName').innerText = players[Math.floor(Math.random()*players.length)];
+                }
+            }
+        }
+
+        function resetGame() {
+            document.getElementById('finish').classList.add('hidden');
+            document.getElementById('setup').classList.remove('hidden');
+            buildInputs();
+        }
+        window.onload = buildInputs;
+    </script>
+</body>
+</html>
