@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Familia de Impostores</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card">
+        <div id="setup">
+            <h1>🕵️‍♂️ Familia de Impostores</h1>
+            <label>Nº Jugadores</label>
+            <input type="number" id="playerQty" value="3" min="3" onchange="buildInputs()">
+            <div id="namesContainer" class="name-list"></div>
+            <label>Categoría</label>
+            <select id="catSelect">
+                <option value="biblia">Biblia</option>
+                <option value="peliculas">Películas</option>
+                <option value="animales">Animales</option>
+                <option value="comida">Comida</option>
+                <option value="lugares">Lugares</option>
+                <option value="profesiones">Profesiones</option>
+            </select>
+            <button onclick="init()">¡Empezar!</button>
+        </div>
+
+        <div id="game" class="hidden">
+            <h2 id="turnTitle">---</h2>
+            <p id="instr">Desliza hacia arriba para ver tu secreto</p>
+            <div class="slider-container" id="sliderCont">
+                <div class="content-reveal">
+                    <div id="secretWord" class="secret-word">---</div>
+                    <div id="hintArea" class="hint-box hidden">
+                        <strong>Pista:</strong> <span id="hintText"></span>
+                    </div>
+                </div>
+                <div class="slider-track" id="sliderTrack">
+                    <span class="slider-text">▲ DESLIZAR ▲</span>
+                </div>
+            </div>
+            <button id="nextBtn" class="hidden" onclick="nextTurn()">Siguiente Jugador</button>
+        </div>
+
+        <div id="finish" class="hidden">
+            <h1>¡A Jugar!</h1>
+            <div class="starter-badge">
+                <p>COMIENZA EL JUEGO:</p>
+                <div id="starterName">---</div>
+            </div>
+            <button onclick="restartSamePlayers()">Mismos Jugadores</button>
+            <button onclick="resetGame()" class="btn-alt">Cambiar Configuración</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
