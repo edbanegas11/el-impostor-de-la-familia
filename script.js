@@ -32,6 +32,7 @@ let turnIndex = 0;
 let phase = 'REVEAL';
 let timerInterval;
 
+// Navegación
 function showStep(id) {
     document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
@@ -43,6 +44,7 @@ function cancelGame() {
     showStep('step1');
 }
 
+// Jugadores
 function addPlayer() {
     const input = document.getElementById('playerNameInput');
     const name = input.value.trim();
@@ -71,16 +73,24 @@ function removePlayer(idx) {
     if (players.length < 3) document.getElementById('toStep2').classList.add('hidden');
 }
 
+// Configuración
 function goToStep2() { showStep('step2'); }
 function selectCategory(cat) { selectedCategory = cat; showStep('step3'); }
 function changeImp(v) { impostorCount = Math.max(1, Math.min(players.length - 2, impostorCount + v)); document.getElementById('impVal').innerText = impostorCount; }
 function changeTime(v) { gameTime = Math.max(1, Math.min(10, gameTime + v)); document.getElementById('timeVal').innerText = gameTime + " min"; }
 function toggleHint() { showImpostorHint = !showImpostorHint; document.getElementById('hintToggle').classList.toggle('active'); }
 
+// Juego
 function initGame() {
     const words = database[selectedCategory];
-    if(!words || words.length === 0) { alert("Categoría vacía"); return; }
     const secret = words[Math.floor(Math.random() * words.length)];
+    
+    // Resetear UI del final
+    document.getElementById('impostorResult').classList.add('hidden');
+    document.getElementById('revealBtn').classList.remove('hidden');
+    document.getElementById('resetOptions').classList.add('hidden');
+    document.getElementById('preResetBtn').classList.remove('hidden');
+
     gameData = players.map(p => ({ name: p, role: 'FAMILIA', word: secret.w, hint: '' }));
     let assigned = 0;
     while(assigned < impostorCount) {
@@ -121,16 +131,41 @@ function flow() {
     }
 }
 
+// Final
 function startFinish() {
     showStep('finish');
     document.getElementById('starterName').innerText = players[Math.floor(Math.random() * players.length)];
     let t = gameTime * 60;
     const disp = document.getElementById('timerDisplay');
+    clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         let m = Math.floor(t / 60), s = t % 60;
         disp.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        if (--t < 0) clearInterval(timerInterval);
+        if (--t < 0) {
+            clearInterval(timerInterval);
+            disp.innerText = "¡TIEMPO!";
+        }
     }, 1000);
 }
 
-function restartGame() { location.reload(); }
+function confirmReveal() {
+    if(confirm("¿Están listos para saber quién es el impostor?")) {
+        const impostors = gameData.filter(p => p.role === 'IMPOSTOR').map(p => p.name);
+        document.getElementById('impostorName').innerText = impostors.join(", ");
+        document.getElementById('revealBtn').classList.add('hidden');
+        document.getElementById('impostorResult').classList.remove('hidden');
+    }
+}
+
+function showResetOptions() {
+    document.getElementById('preResetBtn').classList.add('hidden');
+    document.getElementById('resetOptions').classList.remove('hidden');
+}
+
+function samePlayers() {
+    showStep('step2'); // Lleva directo a elegir categoría
+}
+
+function fullRestart() {
+    location.reload();
+}
