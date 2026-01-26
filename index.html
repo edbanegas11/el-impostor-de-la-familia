@@ -1,81 +1,100 @@
-<div class="card">
-  <div id="backAction" class="back-nav hidden" onclick="cancelGame()">
-    <span class="icon">←</span>
-  </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Familia de Impostores</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
 
-  <div id="step1" class="step">
-    <h1 class="main-title">EL IMPOSTOR<br><span class="sub-title">DE LA FAMILIA</span></h1>
-    <div class="input-container">
-      <input type="text" id="playerNameInput" class="modern-input" placeholder="Escribe un nombre...">
-      <button onclick="addPlayer()" class="btn-circle-add">+</button>
+<div class="phone-wrapper">
+  <div class="card">
+    <div id="backAction" class="back-nav hidden" onclick="cancelGame()">
+      <span class="icon">←</span>
     </div>
-    <div id="namesList" class="stack-container"></div>
-    <button id="toStep2" class="hidden btn-primary-modern" onclick="goToStep2()">CONTINUAR</button>
-  </div>
 
-  <div id="step2" class="step hidden">
-    <h1>CATEGORÍA</h1>
-    <div id="categoryList" class="stack-container">
-      <button class="stack-item-btn" onclick="selectCategory('biblia')"><span>1.</span> Biblia</button>
-      <button class="stack-item-btn" onclick="selectCategory('comida')"><span>2.</span> Comida</button>
-      <button class="stack-item-btn" onclick="selectCategory('profesiones')"><span>3.</span> Profesiones</button>
-      <button class="stack-item-btn" onclick="selectCategory('lugares')"><span>4.</span> Lugares</button>
-      <button class="stack-item-btn" onclick="selectCategory('objetos')"><span>5.</span> Objetos</button>
-      <button class="stack-item-btn" onclick="selectCategory('peliculas')"><span>6.</span> Películas</button>
-      <button class="stack-item-btn" onclick="selectCategory('animales')"><span>7.</span> Animales</button>
+    <div id="step1" class="step">
+      <h1 class="main-title">FAMILIA DE<br><span class="sub-title">IMPOSTORES</span></h1>
+      <div class="input-container">
+        <input type="text" id="playerNameInput" class="modern-input" placeholder="Nombre del jugador...">
+        <button onclick="addPlayer()" class="btn-circle-add">+</button>
+      </div>
+      <div id="namesList" class="stack-container"></div>
+      <button id="toStep2" class="hidden btn-primary-modern" onclick="goToStep2()">CONTINUAR</button>
     </div>
-  </div>
 
-  <div id="step3" class="step hidden">
-    <h1>AJUSTES</h1>
-    <div class="setting-card">
-      <label>Nº DE IMPOSTORES</label>
-      <div class="stepper-modern">
-        <button onclick="changeImp(-1)">-</button>
-        <span id="impVal">1</span>
-        <button onclick="changeImp(1)">+</button>
+    <div id="step2" class="step hidden">
+      <h1>CATEGORÍA</h1>
+      <div id="categoryList" class="stack-container">
+        <button class="stack-item-btn" onclick="selectCategory('biblia')"><span>1.</span> Biblia</button>
+        <button class="stack-item-btn" onclick="selectCategory('comida')"><span>2.</span> Comida</button>
+        <button class="stack-item-btn" onclick="selectCategory('profesiones')"><span>3.</span> Profesiones</button>
+        <button class="stack-item-btn" onclick="selectCategory('lugares')"><span>4.</span> Lugares</button>
+        <button class="stack-item-btn" onclick="selectCategory('objetos')"><span>5.</span> Objetos</button>
+        <button class="stack-item-btn" onclick="selectCategory('peliculas')"><span>6.</span> Películas</button>
+        <button class="stack-item-btn" onclick="selectCategory('animales')"><span>7.</span> Animales</button>
       </div>
     </div>
-    <div class="setting-card">
-      <label>TIEMPO DE DISCUSIÓN</label>
-      <div class="stepper-modern">
-        <button onclick="changeTime(-1)">-</button>
-        <span id="timeVal">3 min</span>
-        <button onclick="changeTime(1)">+</button>
+
+    <div id="step3" class="step hidden">
+      <h1>AJUSTES</h1>
+      <div class="setting-card">
+        <label>Nº DE IMPOSTORES</label>
+        <div class="stepper-modern">
+          <button onclick="changeImp(-1)">-</button>
+          <span id="impVal">1</span>
+          <button onclick="changeImp(1)">+</button>
+        </div>
+      </div>
+      <div class="setting-card">
+        <label>TIEMPO DE DISCUSIÓN</label>
+        <div class="stepper-modern">
+          <button onclick="changeTime(-1)">-</button>
+          <span id="timeVal">3 min</span>
+          <button onclick="changeTime(1)">+</button>
+        </div>
+      </div>
+      <div class="toggle-card-modern" onclick="toggleHint()">
+        <span>Pista para impostor</span>
+        <div id="hintToggle" class="toggle-switch active"></div>
+      </div>
+      <button class="btn-primary-modern" onclick="initGame()">¡EMPEZAR!</button>
+    </div>
+
+    <div id="game" class="step hidden">
+      <div class="turn-display">
+        <span class="turn-label">TURNO DE</span>
+        <h2 id="turnTitle">---</h2>
+      </div>
+      <div id="wordBox" class="reveal-card hidden">
+        <span class="reveal-label">TU ROL ES:</span>
+        <div id="secretWord" class="reveal-text">---</div>
+        <div id="hintArea" class="hint-pill">
+          <strong>Pista:</strong> <span id="hintText"></span>
+        </div>
+      </div>
+      <div class="game-actions">
+        <p id="instr" class="instr-text">Toca para descubrir tu secreto</p>
+        <button id="mainBtn" class="btn-primary-modern" onclick="flow()">VER PALABRA</button>
       </div>
     </div>
-    <div class="toggle-card-modern" onclick="toggleHint()">
-      <span>Pista para impostor</span>
-      <div id="hintToggle" class="toggle-switch active"></div>
-    </div>
-    <button class="btn-primary-modern" onclick="initGame()">¡EMPEZAR PARTIDA!</button>
-  </div>
 
-  <div id="game" class="step hidden">
-    <div class="turn-display">
-      <span class="turn-label">TURNO DE</span>
-      <h2 id="turnTitle">---</h2>
-    </div>
-    <div id="wordBox" class="reveal-card hidden">
-      <span class="reveal-label">TU ROL ES:</span>
-      <div id="secretWord" class="reveal-text">---</div>
-      <div id="hintArea" class="hint-pill">
-        <strong>Pista:</strong> <span id="hintText"></span>
+    <div id="finish" class="step hidden">
+      <h1 class="timer-title">DISCUSIÓN</h1>
+      <div id="timerDisplay" class="timer-main">03:00</div>
+      <div class="starter-box">
+        <p>EMPIEZA EL DEBATE:</p>
+        <div id="starterName" class="starter-highlight">---</div>
       </div>
+      <button class="btn-primary-modern" onclick="restartGame()">NUEVA RONDA</button>
     </div>
-    <div class="game-actions">
-      <p id="instr" class="instr-text">Toca el botón para ver tu palabra</p>
-      <button id="mainBtn" class="btn-primary-modern btn-large" onclick="flow()">VER PALABRA</button>
-    </div>
-  </div>
-
-  <div id="finish" class="step hidden">
-    <h1 class="timer-title">DISCUSIÓN</h1>
-    <div id="timerDisplay" class="timer-main">03:00</div>
-    <div class="starter-box">
-      <p>EMPIEZA EL DEBATE:</p>
-      <div id="starterName" class="starter-highlight">---</div>
-    </div>
-    <button class="btn-primary-modern" onclick="restartGame()">NUEVA RONDA</button>
   </div>
 </div>
+
+<script src="script.js"></script>
+</body>
+</html>
