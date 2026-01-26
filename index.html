@@ -85,13 +85,29 @@
     <div id="finish" class="step hidden">
       <h1 class="timer-title">DISCUSIÓN</h1>
       <div id="timerDisplay" class="timer-main">03:00</div>
-      <div class="starter-box">
+      
+      <div id="revealSection" class="reveal-final-box">
+        <button id="revealBtn" class="btn-primary-modern" style="background: var(--danger);" onclick="confirmReveal()">REVELAR IMPOSTOR</button>
+        <div id="impostorResult" class="hidden">
+            <p>EL IMPOSTOR ERA:</p>
+            <div id="impostorName" class="starter-highlight" style="color: var(--danger);">---</div>
+        </div>
+      </div>
+
+      <div class="starter-box" id="starterBox">
         <p>EMPIEZA EL DEBATE:</p>
         <div id="starterName" class="starter-highlight">---</div>
       </div>
-      <button class="btn-primary-modern" onclick="restartGame()">NUEVA RONDA</button>
+
+      <div id="resetOptions" class="hidden stack-container" style="margin-top: 20px;">
+        <button class="btn-primary-modern" onclick="samePlayers()">MISMA FAMILIA</button>
+        <button class="stack-item-btn" style="justify-content: center;" onclick="fullRestart()">VOLVER AL INICIO</button>
+      </div>
+      
+      <button id="preResetBtn" class="btn-primary-modern" onclick="showResetOptions()">NUEVA RONDA</button>
     </div>
 </div>
+
 <script src="script.js"></script>
 </body>
 </html>
