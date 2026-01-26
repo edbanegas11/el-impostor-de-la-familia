@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Familia de Impostores</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,13 +14,13 @@
 <div class="phone-wrapper">
   <div class="card">
     <div id="backAction" class="back-nav hidden" onclick="cancelGame()">
-      <span class="icon">←</span>
+      <span>←</span>
     </div>
 
     <div id="step1" class="step">
       <h1 class="main-title">FAMILIA DE<br><span class="sub-title">IMPOSTORES</span></h1>
       <div class="input-container">
-        <input type="text" id="playerNameInput" class="modern-input" placeholder="Nombre del jugador...">
+        <input type="text" id="playerNameInput" class="modern-input" placeholder="Nombre...">
         <button onclick="addPlayer()" class="btn-circle-add">+</button>
       </div>
       <div id="namesList" class="stack-container"></div>
@@ -28,7 +28,7 @@
     </div>
 
     <div id="step2" class="step hidden">
-      <h1>CATEGORÍA</h1>
+      <h2 class="section-title">CATEGORÍA</h2>
       <div id="categoryList" class="stack-container">
         <button class="stack-item-btn" onclick="selectCategory('biblia')"><span>1.</span> Biblia</button>
         <button class="stack-item-btn" onclick="selectCategory('comida')"><span>2.</span> Comida</button>
@@ -41,7 +41,7 @@
     </div>
 
     <div id="step3" class="step hidden">
-      <h1>AJUSTES</h1>
+      <h2 class="section-title">AJUSTES</h2>
       <div class="setting-card">
         <label>Nº DE IMPOSTORES</label>
         <div class="stepper-modern">
@@ -62,7 +62,7 @@
         <span>Pista para impostor</span>
         <div id="hintToggle" class="toggle-switch active"></div>
       </div>
-      <button class="btn-primary-modern" onclick="initGame()">¡EMPEZAR!</button>
+      <button class="btn-primary-modern" onclick="initGame()">¡EMPEZAR PARTIDA!</button>
     </div>
 
     <div id="game" class="step hidden">
@@ -78,7 +78,7 @@
         </div>
       </div>
       <div class="game-actions">
-        <p id="instr" class="instr-text">Toca para descubrir tu secreto</p>
+        <p id="instr" class="instr-text">Toca el botón para ver tu palabra</p>
         <button id="mainBtn" class="btn-primary-modern" onclick="flow()">VER PALABRA</button>
       </div>
     </div>
