@@ -236,10 +236,10 @@ function showStep(id) {
 }
 
 function cancelGame() {
-    if(confirm("¿Cancelar y volver al inicio?")) {
-        clearInterval(timerInterval);
-        showStep('step1');
-        document.getElementById('backAction').classList.add('hidden');
+    // Eliminada la confirmación por petición del usuario
+    clearInterval(timerInterval);
+    showStep('step1');
+    document.getElementById('backAction').classList.add('hidden');
     }
 }
 
@@ -321,4 +321,5 @@ function startTimer() {
 
 function restartGame() {
     initGame();
+
 }
