@@ -4,104 +4,68 @@
     --border: rgba(255,255,255,0.1);
 }
 
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
 body { 
-    font-family: 'Inter', sans-serif; 
-    background: var(--bg); 
-    color: var(--text); 
-    margin: 0; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    min-height: 100vh; 
+    font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); 
+    margin: 0; display: flex; align-items: center; justify-content: center; 
+    min-height: 100vh; padding: 15px; overflow: hidden;
 }
 
-/* MARCO DE TELÉFONO PARA CODEPEN */
-@media (min-width: 500px) {
-    .phone-wrapper {
-        width: 375px;
-        height: 750px;
-        border: 12px solid #222;
-        border-radius: 50px;
-        overflow: hidden;
-        position: relative;
-        box-shadow: 0 0 0 2px #444, 0 30px 60px rgba(0,0,0,0.8);
-        background: var(--card-bg);
-    }
-    
-    /* Notch del teléfono */
-    .phone-wrapper::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 150px;
-        height: 25px;
-        background: #222;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        z-index: 1000;
-    }
+.phone-wrapper {
+    width: 100%; max-width: 400px; height: 850px; max-height: 92vh;
+    background: var(--card-bg); border-radius: 40px; position: relative;
+    border: 1px solid var(--border); box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    display: flex; flex-direction: column; overflow: hidden;
 }
 
-.card { 
-    height: 100%;
-    padding: 50px 25px 25px; /* Espacio para el notch */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow-y: auto;
-}
+.card { height: 100%; padding: 40px 20px 20px; display: flex; flex-direction: column; overflow-y: auto; }
 
-/* Títulos y textos */
-.main-title { font-size: 1.4rem; color: var(--primary); letter-spacing: 2px; line-height: 1.2; margin-bottom: 2rem; }
-.sub-title { color: white; font-size: 1rem; opacity: 0.8; }
+.main-title { font-size: 1.5rem; color: var(--primary); letter-spacing: 2px; line-height: 1.2; margin-bottom: 2rem; text-align: center; font-weight: 800; }
+.sub-title { color: white; opacity: 0.9; }
+.section-title { text-align: center; margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 1px; }
 
-/* Estilo unificado 65px alto */
-.modern-input, .stack-item, .stack-item-btn, .btn-primary-modern {
+.modern-input, .stack-item, .stack-item-btn, .btn-primary-modern, .toggle-card-modern {
     width: 100%; height: 65px; border-radius: 20px; font-size: 1.1rem; font-weight: 600;
-    display: flex; align-items: center; box-sizing: border-box; transition: 0.3s;
+    display: flex; align-items: center; box-sizing: border-box; transition: 0.2s;
+    background: #0b0f1a; border: 2px solid var(--border); color: white;
 }
 
-.modern-input { background: #0b0f1a; border: 2px solid var(--border); padding: 0 25px; color: white; outline: none; }
-.btn-circle-add { width: 65px; height: 65px; border-radius: 20px; border: none; background: var(--accent); color: white; font-size: 2rem; cursor: pointer; flex-shrink: 0; }
+.modern-input { padding: 0 20px; outline: none; }
+.modern-input:focus { border-color: var(--primary); }
 
 .input-container { display: flex; gap: 10px; margin-bottom: 20px; }
-.stack-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; flex-grow: 1; }
+.btn-circle-add { width: 65px; height: 65px; border-radius: 20px; border: none; background: var(--accent); color: white; font-size: 2rem; cursor: pointer; flex-shrink: 0; }
 
-.stack-item { background: #0b0f1a; border: 2px solid var(--border); padding: 0 25px; justify-content: space-between; animation: slideUp 0.3s ease; }
-.stack-item-btn { background: #0b0f1a; border: 2px solid var(--border); color: white; padding: 0 25px; cursor: pointer; }
+.stack-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.stack-item { justify-content: space-between; padding: 0 20px; }
+.stack-item-btn { cursor: pointer; justify-content: flex-start; padding: 0 25px; }
 .stack-item-btn span { color: var(--primary); margin-right: 15px; }
 
-.btn-primary-modern { background: var(--primary); border: none; color: white; justify-content: center; cursor: pointer; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); flex-shrink: 0; }
-.btn-primary-modern:active { transform: scale(0.96); }
+.btn-primary-modern { background: var(--primary); border: none; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3); margin-top: auto; }
+.btn-primary-modern:active { transform: scale(0.98); }
 
-/* Configuración */
-.setting-card { margin-bottom: 20px; text-align: left; }
-.setting-card label { font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-left: 5px; }
-.stepper-modern { display: flex; align-items: center; justify-content: space-between; background: #0b0f1a; padding: 5px; border-radius: 20px; border: 2px solid var(--border); margin-top: 8px; }
-.stepper-modern button { width: 50px; height: 50px; border-radius: 15px; border: none; background: var(--card-bg); color: white; font-size: 1.5rem; }
+.setting-card { margin-bottom: 15px; }
+.setting-card label { font-size: 0.75rem; color: var(--primary); font-weight: 800; margin-left: 5px; }
+.stepper-modern { display: flex; align-items: center; justify-content: space-between; background: #0b0f1a; padding: 5px; border-radius: 20px; border: 2px solid var(--border); margin-top: 5px; }
+.stepper-modern button { width: 50px; height: 50px; border-radius: 15px; border: none; background: var(--card-bg); color: white; font-size: 1.5rem; cursor: pointer; }
 .stepper-modern span { font-size: 1.2rem; font-weight: 800; color: var(--warning); }
 
-/* Switch */
-.toggle-card-modern { background: #0b0f1a; height: 65px; border-radius: 20px; padding: 0 25px; display: flex; justify-content: space-between; align-items: center; border: 2px solid var(--border); cursor: pointer; margin-bottom: 20px; }
+.toggle-card-modern { justify-content: space-between; padding: 0 20px; cursor: pointer; }
 .toggle-switch { width: 45px; height: 24px; background: #334155; border-radius: 20px; position: relative; }
 .toggle-switch::after { content: ''; position: absolute; width: 18px; height: 18px; background: white; border-radius: 50%; top: 3px; left: 3px; transition: 0.3s; }
 .toggle-switch.active { background: var(--accent); }
 .toggle-switch.active::after { left: 24px; }
 
-/* Juego */
-.reveal-card { background: #0b0f1a; border-radius: 30px; padding: 40px 20px; border: 2px solid var(--primary); margin: 1.5rem 0; text-align: center; }
-.reveal-label { font-size: 0.7rem; color: var(--primary); font-weight: 800; }
-.reveal-text { font-size: 2rem; font-weight: 900; color: var(--accent); margin-top: 10px; }
+.reveal-card { background: #0b0f1a; border-radius: 30px; padding: 30px; border: 2px solid var(--primary); margin: 20px 0; text-align: center; }
+.reveal-text { font-size: 2rem; font-weight: 900; color: var(--accent); margin-top: 10px; text-transform: uppercase; }
 .reveal-text.impostor { color: var(--danger); }
 .hint-pill { margin-top: 15px; font-size: 0.9rem; color: var(--warning); background: rgba(245, 158, 11, 0.1); padding: 10px; border-radius: 10px; }
 
-.timer-main { font-size: 4rem; font-weight: 900; color: var(--warning); margin: 10px 0; }
-.starter-box { background: rgba(59, 130, 246, 0.05); padding: 20px; border-radius: 25px; border: 2px dashed var(--primary); margin-bottom: 20px; }
+.timer-main { font-size: 4rem; font-weight: 900; color: var(--warning); text-align: center; margin: 10px 0; }
+.starter-box { background: rgba(59, 130, 246, 0.05); padding: 20px; border-radius: 25px; border: 2px dashed var(--primary); margin-bottom: 20px; text-align: center; }
 .starter-highlight { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
 
-.back-nav { position: absolute; top: 40px; left: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; }
+.back-nav { position: absolute; top: 15px; left: 15px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 100; font-size: 1.5rem; }
 .hidden { display: none !important; }
-@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.instr-text { text-align: center; opacity: 0.6; font-size: 0.9rem; margin-bottom: 10px; }
