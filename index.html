@@ -5,109 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Familia de Impostores</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="app-container">
-    <div id="backAction" class="back-nav hidden" onclick="cancelGame()">
-      <span>←</span>
-    </div>
+    <div id="backAction" class="back-nav hidden" onclick="goBack()"><span>←</span></div>
 
     <div id="step1" class="step">
-      <h1 class="main-title">FAMILIA DE<br><span class="sub-title">IMPOSTORES</span></h1>
-      <div class="input-container">
-        <input type="text" id="playerNameInput" class="modern-input" placeholder="Nombre...">
-        <button onclick="addPlayer()" class="btn-circle-add">+</button>
-      </div>
-      <div id="namesList" class="stack-container"></div>
-      <button id="toStep2" class="hidden btn-primary-modern" onclick="goToStep2()">CONTINUAR</button>
-    </div>
+        <h1 class="main-title">EL IMPOSTOR DE LA FAMILIA</h1>
 
-    <div id="step2" class="step hidden">
-      <h2 class="section-title">CATEGORÍA</h2>
-      <div id="categoryList" class="stack-container">
-        <button class="stack-item-btn" onclick="selectCategory('biblia')"><span>1.</span> Biblia</button>
-        <button class="stack-item-btn" onclick="selectCategory('comida')"><span>2.</span> Comida</button>
-        <button class="stack-item-btn" onclick="selectCategory('profesiones')"><span>3.</span> Profesiones</button>
-        <button class="stack-item-btn" onclick="selectCategory('lugares')"><span>4.</span> Lugares</button>
-        <button class="stack-item-btn" onclick="selectCategory('objetos')"><span>5.</span> Objetos</button>
-        <button class="stack-item-btn" onclick="selectCategory('peliculas')"><span>6.</span> Películas</button>
-        <button class="stack-item-btn" onclick="selectCategory('animales')"><span>7.</span> Animales</button>
-      </div>
-    </div>
-
-    <div id="step3" class="step hidden">
-      <h2 class="section-title">AJUSTES</h2>
-      <div class="setting-card">
-        <label>Nº DE IMPOSTORES</label>
-        <div class="stepper-modern">
-          <button onclick="changeImp(-1)">-</button>
-          <span id="impVal">1</span>
-          <button onclick="changeImp(1)">+</button>
+        <div class="input-container">
+            <input type="text" id="playerNameInput" class="modern-input" placeholder="Escribe un nombre...">
+            <button onclick="addPlayer()" class="btn-circle-add">+</button>
         </div>
-      </div>
-      <div class="setting-card">
-        <label>TIEMPO DE DISCUSIÓN</label>
-        <div class="stepper-modern">
-          <button onclick="changeTime(-1)">-</button>
-          <span id="timeVal">3 min</span>
-          <button onclick="changeTime(1)">+</button>
-        </div>
-      </div>
-      <div class="toggle-card-modern" onclick="toggleHint()">
-        <span>Pista para impostor</span>
-        <div id="hintToggle" class="toggle-switch active"></div>
-      </div>
-      <button class="btn-primary-modern" onclick="initGame()">¡EMPEZAR PARTIDA!</button>
-    </div>
 
-    <div id="game" class="step hidden">
-      <div class="turn-display">
-        <span class="turn-label">TURNO DE</span>
-        <h2 id="turnTitle">---</h2>
-      </div>
-      <div id="wordBox" class="reveal-card hidden">
-        <span class="reveal-label">TU ROL ES:</span>
+        <div id="clearListBtn" class="clear-link hidden" onclick="clearAllPlayers()">Limpiar lista</div>
+
+        <div id="namesList" class="stack-container"></div>
+
+        <button id="toStep2" class="hidden btn-primary-modern" onclick="goToStep2()">CONTINUAR</button>
+
+        <p style="text-align: center; font-size: 0.7rem; color: #888; margin-top: 30px; opacity: 0.6;">
+            DESIGNED FOR EDWIN RAMOS
+        </p>
+    </div> <div id="step2" class="step hidden">
+    <h2 style="text-align:center;">CATEGORÍA</h2>
+    <div class="stack-container">
+        <button class="stack-item-btn" onclick="selectCategory('biblia')">Biblia</button>
+        <button class="stack-item-btn" onclick="selectCategory('comida')">Comida</button>
+        <button class="stack-item-btn" onclick="selectCategory('profesiones')">Profesiones</button>
+        <button class="stack-item-btn" onclick="selectCategory('objetos')">Objetos</button>
+        <button class="stack-item-btn" onclick="selectCategory('celebridades')">Celebridades</button>
+        <button class="stack-item-btn" onclick="selectCategory('cine')">Películas y Series</button>
+        <button class="stack-item-btn" onclick="selectCategory('marcas')">Marcas Famosas</button>
+        <button class="stack-item-btn" onclick="selectCategory('geografia')">Países y Ciudades</button>
+        <button class="stack-item-btn" style="border-color: #ff9800;" onclick="selectCategory('todas')">🎲 TODAS</button>
+    </div>
+</div> <div id="stepSettings" class="step hidden">
+    <h2 style="text-align:center;">AJUSTES</h2>
+    <div class="setting-row">
+        <span>Impostores</span>
+        <div class="stepper">
+            <button class="btn-step" onclick="changeImpostors(-1)">-</button>
+            <span id="impVal" class="step-val">1</span>
+            <button class="btn-step" onclick="changeImpostors(1)">+</button>
+        </div>
+    </div>
+    <div class="setting-row">
+        <span>Tiempo (min)</span>
+        <div class="stepper">
+            <button class="btn-step" onclick="changeTime(-1)">-</button>
+            <span id="timeVal" class="step-val">3</span>
+            <button class="btn-step" onclick="changeTime(1)">+</button>
+        </div>
+    </div>
+    <button class="btn-primary-modern" onclick="startGame()">¡EMPEZAR JUEGO!</button>
+</div> <div id="game" class="step hidden">
+    <div style="text-align:center;">
+        <span style="color:#00e5ff; font-weight:800;">TURNO DE</span>
+        <h2 id="turnTitle" style="margin-top:5px;">---</h2>
+    </div>
+    <div id="wordBox" class="reveal-card hidden">
         <div id="secretWord" class="reveal-text">---</div>
-        <div id="hintArea" class="hint-pill">
-          <strong>Pista:</strong> <span id="hintText"></span>
+        <div id="hintArea" class="hidden" style="margin-top:15px; color:#ff9800;">
+            Pista: <span id="hintText"></span>
         </div>
-      </div>
-      <div class="game-actions">
-        <p id="instr" class="instr-text">Toca para descubrir tu secreto</p>
-        <button id="mainBtn" class="btn-primary-modern" onclick="flow()">VER PALABRA</button>
-      </div>
     </div>
-
-    <div id="finish" class="step hidden">
-      <h1 class="timer-title">DISCUSIÓN</h1>
-      <div id="timerDisplay" class="timer-main">03:00</div>
-      
-      <div id="revealSection" class="reveal-final-box">
-        <button id="revealBtn" class="btn-primary-modern" style="background: var(--danger);" onclick="confirmReveal()">REVELAR IMPOSTOR</button>
-        <div id="impostorResult" class="hidden">
-            <p>EL IMPOSTOR ERA:</p>
-            <div id="impostorName" class="starter-highlight" style="color: var(--danger);">---</div>
-        </div>
-      </div>
-
-      <div class="starter-box" id="starterBox">
-        <p>EMPIEZA EL DEBATE:</p>
-        <div id="starterName" class="starter-highlight">---</div>
-      </div>
-
-      <div id="resetOptions" class="hidden stack-container" style="margin-top: 20px;">
-        <button class="btn-primary-modern" onclick="samePlayers()">MISMA FAMILIA</button>
-        <button class="stack-item-btn" style="justify-content: center;" onclick="fullRestart()">VOLVER AL INICIO</button>
-      </div>
-      
-      <button id="preResetBtn" class="btn-primary-modern" onclick="showResetOptions()">NUEVA RONDA</button>
-    </div>
+    <button id="mainBtn" class="btn-primary-modern" onclick="flow()">VER PALABRA</button>
 </div>
 
-<script src="script.js"></script>
+    <div id="finish" class="step hidden">
+        <div id="whoStarts" style="text-align:center; color:#00e5ff; font-weight:800; margin-bottom:10px; font-size:1.1rem; min-height:60px;"></div>
+        <div id="timerDisplay" class="timer-display">03:00</div>
+        <div id="impostorResult" class="hidden" style="text-align:center; margin-bottom: 20px;">
+            <div style="color:#ff5252; font-weight:800;">EL IMPOSTOR ERA:</div>
+            <div id="impostorName" class="reveal-card" style="border-color:#ff5252; color:#ff5252; font-size:1.5rem; margin:10px 0;">---</div>
+        </div>
+        <button id="revealBtn" class="btn-primary-modern" style="background:#ff5252; margin-bottom:10px;" onclick="revealImpostor()">REVELAR IMPOSTOR</button>
+        <div id="endOptions" class="hidden" style="display:flex; flex-direction:column; gap:10px; width:100%;">
+            <button class="btn-primary-modern" onclick="newRound()">NUEVA RONDA</button>
+            <button class="stack-item-btn" style="justify-content:center; height:65px;" onclick="goToStart()">IR AL INICIO</button>
+        </div>
+    </div>
+</div> <script src="script.js"></script>
 </body>
 </html>
