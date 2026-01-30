@@ -1,2 +1,2 @@
-# Juego-del-impostor
-Juego del impostor
+# el-impostor-de-la-familia
+el-impostor-de-la-familia
