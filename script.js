@@ -913,7 +913,11 @@ function flow() {
         const isImp = impostors.includes(currentPlayerIndex);
         document.getElementById('secretWord').innerText = isImp ? "¡ERES EL IMPOSTOR!" : secretWord;
         document.getElementById('secretWord').style.color = isImp ? "var(--danger)" : "var(--accent)";
-        document.getElementById('hintArea').classList.toggle('hidden', !isImp);
+        
+        // Se añade la condición: debe ser impostor Y las pistas deben estar activadas
+        const mostrarPista = isImp && document.getElementById('hintToggle').checked;
+        document.getElementById('hintArea').classList.toggle('hidden', !mostrarPista);
+        
         document.getElementById('hintText').innerText = currentHint;
         document.getElementById('wordBox').classList.remove('hidden');
         document.getElementById('mainBtn').innerText = "ENTENDIDO";
