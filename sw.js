@@ -1,10 +1,10 @@
-const CACHE_NAME = 'impostor-v5';
+const CACHE_NAME = 'impostor-v1';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './script.js',
-  './icon.png' // Asegúrate de tener una imagen con este nombre
+  './logo.png' // Asegúrate de tener una imagen con este nombre
 ];
 
 // Instalar y guardar archivos en caché
