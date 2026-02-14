@@ -1,0 +1,241 @@
+:root { 
+    --bg: #05070a; --card-bg: #161f32; --primary: #3b82f6; 
+    --accent: #10b981; --danger: #ef4444; --text: #f8fafc; --warning: #f59e0b; 
+    --border: rgba(255,255,255,0.1);
+}
+/* Aplicar a toda la aplicación */
+html, body {
+    color: var(--text); 
+    margin: 0; 
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Evita el scroll elástico del navegador */
+    position: fixed; /* Fija la vista */
+    display: flex;
+    justify-content: center;
+    user-select: none; /* No permite seleccionar texto */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none; /* Desactiva el menú contextual al dejar presionado */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--card-bg) !important;
+}
+
+/* Permitir selección solo en el input (donde sí es necesario escribir) */
+input, textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+body { 
+    font-family: 'Inter', -apple-system, sans-serif; 
+    background: #000; /* Fondo negro profundo para el notch */
+    color: var(--text); 
+    margin: 0; 
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; 
+    position: fixed; 
+    display: flex;
+    justify-content: center;
+}
+
+.app-container { 
+    width: 100%; 
+    max-width: 500px; 
+    height: 100%; /* Usa el 100% del fixed body */
+    background: var(--card-bg); 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    box-sizing: border-box;
+    /* ESTO ES VITAL: Evita que el contenido choque con el notch y la barra inferior */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.step { 
+    flex: 1; /* Ocupa todo el espacio disponible */
+    padding: 20px 25px 0px 25px; /* Quitamos padding inferior para ganar espacio */
+    box-sizing: border-box; 
+    display: flex; 
+    flex-direction: column; 
+    box-sizing: border-box; 
+    height: 100%;
+    overflow: hidden; /* IMPORTANTE: El step no debe tener scroll */
+    -webkit-overflow-scrolling: touch; 
+}
+
+.main-title { 
+  font-size: 1.4rem; 
+  color: var(--primary); 
+  letter-spacing: 2px; 
+  text-align: center; 
+  font-weight: 800; 
+  margin-bottom: 2rem; 
+}
+
+.modern-input, .stack-item, .stack-item-btn, .btn-primary-modern { 
+  width: 100%; 
+  height: 65px; 
+  border-radius: 20px; 
+  font-size: 1.1rem; 
+  font-weight: 600; 
+  display: flex; 
+  align-items: center; 
+  box-sizing: border-box; 
+}
+
+.modern-input { 
+  background: #0b0f1a;
+  border: 2px solid var(--border); 
+  padding: 0 25px; 
+  color: white; 
+  outline: none; 
+  flex: 1; 
+}
+
+.btn-circle-add { width: 65px; height: 65px; border-radius: 20px; border: none; background: var(--accent); color: white; font-size: 2rem; cursor: pointer; }
+.input-container { display: flex; gap: 10px; margin-bottom: 10px; }
+.clear-link { color: var(--danger); font-size: 0.8rem; text-align: right; margin-bottom: 15px; cursor: pointer; font-weight: 600; text-transform: uppercase; 
+}
+
+.stack-container { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    margin-bottom: 25px;
+    
+    flex: 1;            /* Toma el espacio restante */
+    overflow-y: auto;   /* Permite el scroll */
+    min-height: 0;      /* Importante para Flexbox */
+    
+    /* Scroll suave de iOS */
+    -webkit-overflow-scrolling: touch; 
+    
+    /* Ocultar la barra */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.stack-container::-webkit-scrollbar {
+    display: none; /* Desaparece la barra en iPhone */
+}
+
+button, .btn-circle-add, .stack-item-btn {
+    -webkit-tap-highlight-color: transparent;
+}
+.stack-item { 
+    flex-shrink: 0;     /* Prohíbe que el elemento se haga pequeño */
+    background: #0b0f1a; 
+    border: 2px solid var(--border); 
+    padding: 0 25px; 
+    justify-content: space-between; 
+    min-height: 65px;   /* Altura fija asegurada */
+}
+
+.stack-item-btn { background: #0b0f1a; border: 2px solid var(--border); color: white; padding: 0 25px; cursor: pointer; margin-bottom: 5px; transition: 0.2s; }
+.stack-item-btn:active { background: var(--primary); }
+
+.btn-primary-modern { 
+    background: var(--primary); 
+    border: none; 
+    color: white; 
+    justify-content: center; 
+    cursor: pointer; 
+    
+    /* 1. Empuja hacia abajo */
+    margin-top: auto; 
+    
+    /* 2. Asegura que no se pegue al borde físico del iPhone */
+    margin-bottom: 15px; 
+    
+    /* 3. Evita que el botón se aplaste si hay muchos nombres */
+    flex-shrink: 0; 
+    
+    /* 4. Altura fija para que sea fácil de tocar con el pulgar */
+    height: 65px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.setting-row { background: #0b0f1a; border: 2px solid var(--border); border-radius: 20px; padding: 15px 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+.stepper { display: flex; align-items: center; gap: 15px; }
+
+.btn-step { 
+  width: 40px; height: 40px; 
+  border-radius: 12px; border: none; 
+  background: var(--card-bg); color: white; font-size: 1.5rem; font-weight: 800; cursor: pointer; 
+}
+.step-val { font-size: 1.2rem; font-weight: 800; color: var(--warning); min-width: 40px; text-align: center; }
+.reveal-card { background: #0b0f1a; border-radius: 30px; padding: 40px 20px; border: 2px solid var(--primary); margin: 1.5rem 0; text-align: center; }
+.reveal-text { font-size: 1.8rem; font-weight: 900; color: var(--accent); margin-top: 10px; }
+.timer-display { font-size: 4rem; font-weight: 800; color: var(--warning); text-align: center; margin: 20px 0; }
+
+.back-nav { 
+    position: absolute; 
+    top: calc(env(safe-area-inset-top) + 10px); /* Se adapta dinámicamente al notch */
+    left: 20px; 
+    width: 40px; 
+    height: 40px; 
+    background: rgba(255,255,255,0.1); 
+    border-radius: 12px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 100; 
+    color: white; 
+    backdrop-filter: blur(10px); /* Efecto cristalino tipo iOS */
+}
+
+.hidden { display: none !important; }
+/* Contenedor del switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+/* Ocultar checkbox original */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* El slider (fondo) */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #334155;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+/* El círculo blanco */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/* Color cuando está activo (usando tu variable --accent) */
+input:checked + .slider {
+  background-color: var(--accent);
+}
+
+/* Movimiento del círculo */
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
